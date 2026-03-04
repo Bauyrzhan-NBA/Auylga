@@ -21,7 +21,7 @@ import AdminNews from './pages/AdminNews';
 import './App.css';
 
 const PublicLayout: React.FC = () => (
-  <div className="min-h-screen flex flex-col bg-gray-50 min-h-[100dvh]">
+  <div className="min-h-screen flex flex-col bg-[#f8fafc] min-h-[100dvh]">
     <Header />
     <main className="flex-grow w-full overflow-x-hidden">
       <Outlet />

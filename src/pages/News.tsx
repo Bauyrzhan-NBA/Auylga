@@ -73,15 +73,15 @@ const News: React.FC = () => {
     const displayContent = currentLanguage.code === 'ru' && singleNews.content_ru ? singleNews.content_ru : (singleNews.content || '');
     const photos = singleNews.gallery && singleNews.gallery.length > 0 ? singleNews.gallery : (singleNews.image ? [singleNews.image] : []);
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <Link to="/news" className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 text-sm font-medium mb-6">
+      <div className="min-h-screen bg-[#f8fafc]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+          <Link to="/news" className="inline-flex items-center gap-1 text-primary-600 hover:text-primary-700 font-semibold mb-6 transition-colors">
             ← {t('Жаңалықтар тізімі', 'К списку новостей')}
           </Link>
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-soft overflow-hidden border border-gray-100">
             {/* Галерея фото — скролл страницы вниз */}
             {photos.length > 0 && (
-              <div className="flex flex-col gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-100">
+              <div className="flex flex-col gap-2 sm:gap-3 p-3 sm:p-4 bg-gray-50">
                 {photos.map((src, index) => (
                   <img
                     key={index}
@@ -105,16 +105,16 @@ const News: React.FC = () => {
               <div className="text-sm text-gray-500 mb-3">
                 {new Date(singleNews.published_at).toLocaleDateString(currentLanguage.code === 'kz' ? 'kk-KZ' : 'ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
                 {singleNews.category && (
-                  <span className="ml-3 bg-blue-100 text-blue-700 px-2.5 py-1 rounded-md font-medium">
+                  <span className="ml-3 bg-primary-100 text-primary-700 px-2.5 py-1 rounded-lg font-semibold">
                     {singleNews.category}
                   </span>
                 )}
               </div>
-              <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
                 {displayTitle}
               </h1>
               <div
-                className="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline"
+                className="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-headings:font-bold prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
                 dangerouslySetInnerHTML={{ __html: displayContent }}
               />
             </div>
@@ -125,13 +125,13 @@ const News: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl md:text-4xl font-bold mb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 tracking-tight">
         {t('Жаңалықтар', 'Новости')}
       </h1>
 
       {news.length === 0 ? (
-        <div className="text-center py-12">
+        <div className="text-center py-16 bg-white rounded-2xl border border-gray-100 shadow-soft">
           <p className="text-gray-500 text-lg">
             {t('Жаңалықтар табылмады', 'Новостей не найдено')}
           </p>
@@ -140,12 +140,16 @@ const News: React.FC = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
             {news.map((item) => (
-              <Link key={item.id} to={`/news/${item.id}`} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
-                <div className="relative h-52 sm:h-56 bg-gray-100 flex-shrink-0">
+              <Link
+                key={item.id}
+                to={`/news/${item.id}`}
+                className="bg-white rounded-2xl shadow-soft overflow-hidden hover:shadow-card-hover transition-all border border-gray-100 flex flex-col"
+              >
+                <div className="relative h-52 sm:h-56 bg-gray-100 flex-shrink-0 overflow-hidden">
                   <img
                     src={item.image ? encodeURI(item.image) : '/photos/smilefamilykz.jpg'}
                     alt={item.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                     onError={(e) => {
                       const t = e.target as HTMLImageElement;
@@ -155,23 +159,28 @@ const News: React.FC = () => {
                       }
                     }}
                   />
+                  {item.category && (
+                    <span className="absolute top-3 left-3 bg-primary-600 text-white text-xs font-semibold px-2.5 py-1 rounded-lg">
+                      {item.category}
+                    </span>
+                  )}
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   <div className="text-sm text-gray-500 mb-2">
                     {new Date(item.published_at).toLocaleDateString()}
                     {item.category && (
-                      <span className="ml-2 bg-primary-100 text-primary-600 px-2 py-1 rounded text-xs">
+                      <span className="ml-2 bg-primary-100 text-primary-600 px-2.5 py-1 rounded-lg text-xs font-medium">
                         {item.category}
                       </span>
                     )}
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 line-clamp-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary-700 transition-colors">
                     {item.title}
                   </h3>
                   <p className="text-gray-600 mb-4 line-clamp-3">
                     {item.excerpt}
                   </p>
-                  <span className="text-blue-600 hover:text-blue-700 font-semibold mt-auto">
+                  <span className="text-primary-600 hover:text-primary-700 font-semibold mt-auto transition-colors">
                     {t('Толығырақ', 'Читать далее')} →
                   </span>
                 </div>
@@ -181,15 +190,15 @@ const News: React.FC = () => {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex justify-center space-x-2">
+            <div className="flex justify-center gap-2 flex-wrap">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 rounded ${
+                  className={`px-4 py-2.5 rounded-xl font-semibold transition-all ${
                     currentPage === page
-                      ? 'bg-primary-600 text-white'
-                      : 'bg-white text-gray-700 hover:bg-gray-100'
+                      ? 'bg-primary-600 text-white shadow-soft'
+                      : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
                   }`}
                 >
                   {page}

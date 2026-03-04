@@ -117,38 +117,43 @@ const Home: React.FC = () => {
     });
 
   return (
-    <div className="bg-white">
+    <div className="bg-[#f8fafc]">
       {/* ── HERO ── */}
       <section
         className="relative overflow-hidden bg-cover bg-center min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh]"
         style={{ backgroundImage: 'url(/photos/smilefamilykz.jpg)' }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-900/75 via-primary-800/60 to-gray-900/70" />
+        <div className="absolute inset-0 bg-black/20" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32">
           <div className="max-w-3xl">
-            <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-full mb-4 sm:mb-6 uppercase tracking-wider">
+            <span className="inline-block bg-white/25 backdrop-blur-sm text-white text-xs font-bold px-4 py-2 rounded-full mb-5 sm:mb-6 uppercase tracking-widest border border-white/30">
               {t('Мемлекеттік қолдау порталы', 'Портал государственной поддержки')}
             </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4 sm:mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4 sm:mb-6 drop-shadow-lg tracking-tight">
               {t(
                 'Ауыл тұрғындарына арналған мемлекеттік қолдау',
                 'Государственная поддержка для жителей сёл'
               )}
             </h1>
-            <p className="text-blue-100 text-base sm:text-lg md:text-xl mb-8 sm:mb-10 max-w-xl leading-relaxed">
+            <p className="text-blue-50/95 text-base sm:text-lg md:text-xl mb-8 sm:mb-10 max-w-xl leading-relaxed">
               {t(
                 'Гранттар, субсидиялар, баспана бағдарламалары — барлық ақпарат бір жерде',
                 'Гранты, субсидии, жилищные программы — вся информация в одном месте'
               )}
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
-              <Link to="/granty"
-                className="inline-flex items-center justify-center gap-2 bg-white text-blue-700 font-bold px-6 py-3.5 sm:px-7 rounded-xl hover:bg-blue-50 active:bg-blue-50 transition-colors shadow-lg touch-manipulation min-h-[2.75rem]">
+              <Link
+                to="/granty"
+                className="inline-flex items-center justify-center gap-2 bg-white text-primary-700 font-bold px-6 py-3.5 sm:px-7 rounded-xl hover:bg-primary-50 active:scale-[0.98] transition-all shadow-card touch-manipulation min-h-[2.75rem]"
+              >
                 {t('Гранттарды қарау', 'Смотреть гранты')}
-                <span>→</span>
+                <span aria-hidden>→</span>
               </Link>
-              <Link to="/contacts"
-                className="inline-flex items-center justify-center gap-2 border-2 border-white/60 text-white font-bold px-6 py-3.5 sm:px-7 rounded-xl hover:bg-white/10 active:bg-white/20 transition-colors touch-manipulation min-h-[2.75rem]">
+              <Link
+                to="/contacts"
+                className="inline-flex items-center justify-center gap-2 border-2 border-white/80 text-white font-bold px-6 py-3.5 sm:px-7 rounded-xl hover:bg-white/15 active:bg-white/25 transition-colors touch-manipulation min-h-[2.75rem]"
+              >
                 {t('Маманмен байланыс', 'Консультация специалиста')}
               </Link>
             </div>
@@ -157,15 +162,16 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── STATS ── */}
-      <section className="bg-blue-700">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-blue-600 divide-y md:divide-y-0 divide-blue-600/80">
+      <section className="bg-gradient-to-r from-primary-700 via-primary-600 to-primary-700 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50" aria-hidden />
+        <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/20 divide-y md:divide-y-0">
             {stats.map((s, i) => (
-              <div key={i} className="px-3 sm:px-6 py-6 sm:py-8 text-center">
-                <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white">
+              <div key={i} className="px-4 sm:px-6 py-6 sm:py-10 text-center">
+                <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tabular-nums">
                   {currentLanguage.code === 'kz' ? s.valueKz : s.valueRu}
                 </div>
-                <div className="text-blue-200 text-xs sm:text-sm mt-1">
+                <div className="text-primary-100 text-xs sm:text-sm mt-1.5 font-medium">
                   {currentLanguage.code === 'kz' ? s.labelKz : s.labelRu}
                 </div>
               </div>
@@ -175,9 +181,9 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── О ПРОЕКТЕ: ЦЕЛИ И ВОЗМОЖНОСТИ ── */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-16 md:py-24 bg-white shadow-inner-soft">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-10 text-center">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-10 text-center tracking-tight">
             {t('«Қаладан ауылға» жобасының мақсаты', 'Цели и возможности проекта')}
           </h2>
           <div className="space-y-6 text-gray-600 leading-relaxed">
@@ -210,7 +216,7 @@ const Home: React.FC = () => {
               </>
             )}
           </div>
-          <div className="mt-8 p-4 md:p-5 rounded-xl bg-amber-50 border border-amber-200">
+          <div className="mt-10 p-5 md:p-6 rounded-2xl bg-amber-50/80 border border-amber-200/80 shadow-soft">
             <p className="text-sm md:text-base text-amber-900/90 italic">
               {currentLanguage.code === 'kz' ? (
                 <>
@@ -227,10 +233,10 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── PROGRAMS ── */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 md:py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
               {t('Мемлекеттік бағдарламалар', 'Государственные программы')}
             </h2>
             <p className="text-gray-500 text-lg max-w-2xl mx-auto">
@@ -240,20 +246,23 @@ const Home: React.FC = () => {
               )}
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {programs.map((p) => (
-              <Link key={p.url} to={p.url}
-                className={`group border-2 rounded-2xl p-5 sm:p-6 transition-all duration-200 touch-manipulation active:scale-[0.99] ${p.color}`}>
+              <Link
+                key={p.url}
+                to={p.url}
+                className={`group border-2 rounded-2xl p-5 sm:p-6 transition-all duration-250 touch-manipulation active:scale-[0.99] shadow-soft hover:shadow-card-hover hover:-translate-y-0.5 ${p.color}`}
+              >
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 text-gray-700 ${p.iconBg}`}>
                   <ProgramIcon name={p.icon} />
                 </div>
-                <h3 className="font-bold text-gray-900 text-lg mb-2 group-hover:text-blue-700 transition-colors">
+                <h3 className="font-bold text-gray-900 text-lg mb-2 group-hover:text-primary-700 transition-colors">
                   {currentLanguage.code === 'kz' ? p.titleKz : p.titleRu}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   {currentLanguage.code === 'kz' ? p.descKz : p.descRu}
                 </p>
-                <span className="inline-flex items-center gap-1 mt-4 text-blue-600 text-sm font-semibold group-hover:gap-2 transition-all">
+                <span className="inline-flex items-center gap-1 mt-4 text-primary-600 text-sm font-semibold group-hover:gap-2 transition-all">
                   {t('Толығырақ', 'Подробнее')} →
                 </span>
               </Link>
@@ -263,15 +272,15 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── ПРОЕКТЫ: ДОЙНАЯ КОРОВА, 100 ОВЕЦ, ІСКЕР АЙМАҚ ── */}
-      <section className="py-16 md:py-20 bg-white">
+      <section className="py-16 md:py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-10 text-center">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-12 text-center tracking-tight">
             {t('Жобалар мен бағдарламалар', 'Проекты и программы')}
           </h2>
 
           <div className="space-y-12">
             <div>
-              <h3 className="text-lg md:text-xl font-bold text-blue-700 mb-4">{t('«Сауынды сиыр» жобасы', 'Проект «Дойная корова»')}</h3>
+              <h3 className="text-lg md:text-xl font-bold text-primary-700 mb-4">{t('«Сауынды сиыр» жобасы', 'Проект «Дойная корова»')}</h3>
               {currentLanguage.code === 'kz' ? (
                 <>
                   <p className="text-gray-700 leading-relaxed mb-3">
@@ -300,7 +309,7 @@ const Home: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-lg md:text-xl font-bold text-blue-700 mb-4">{t('«100 қой» жобасы', 'Проект «100 овец»')}</h3>
+              <h3 className="text-lg md:text-xl font-bold text-primary-700 mb-4">{t('«100 қой» жобасы', 'Проект «100 овец»')}</h3>
               {currentLanguage.code === 'kz' ? (
                 <>
                   <p className="text-gray-700 leading-relaxed mb-3">
@@ -329,7 +338,7 @@ const Home: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-lg md:text-xl font-bold text-blue-700 mb-4">{t('«Іскер аймақ» бағдарламасы', 'Программа «Іскер аймақ»')}</h3>
+              <h3 className="text-lg md:text-xl font-bold text-primary-700 mb-4">{t('«Іскер аймақ» бағдарламасы', 'Программа «Іскер аймақ»')}</h3>
               {currentLanguage.code === 'kz' ? (
                 <>
                   <p className="text-gray-700 leading-relaxed mb-4">
@@ -346,7 +355,7 @@ const Home: React.FC = () => {
                   </div>
                   <p className="text-gray-700 mb-2">
                     Толығырақ{' '}
-                    <a href="https://damu.kz/programmi/subsidy/isker_aymak" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">https://damu.kz/programmi/subsidy/isker_aymak</a>{' '}
+                    <a href="https://damu.kz/programmi/subsidy/isker_aymak" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-700 hover:underline break-all transition-colors">https://damu.kz/programmi/subsidy/isker_aymak</a>{' '}
                     сілтемесі арқылы білуге болады және субсидия калькуляторымен есептеп алуға мүмкіндігіңіз бар.
                   </p>
                 </>
@@ -366,7 +375,7 @@ const Home: React.FC = () => {
                   </div>
                   <p className="text-gray-700 mb-2">
                     Подробнее можно узнать по ссылке:{' '}
-                    <a href="https://damu.kz/programmi/subsidy/isker_aymak" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">damu.kz/programmi/subsidy/isker_aymak</a>
+                    <a href="https://damu.kz/programmi/subsidy/isker_aymak" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-700 hover:underline break-all transition-colors">damu.kz/programmi/subsidy/isker_aymak</a>
                   </p>
                   <p className="text-gray-600 text-sm">Также доступен калькулятор субсидирования для самостоятельного расчёта.</p>
                 </>
@@ -377,9 +386,9 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── ВАКАНСИИ И ПРИГЛАШАЮЩИЕ СЁЛА ── */}
-      <section className="py-16 md:py-20 bg-gray-50">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-8 text-center">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-8 text-center tracking-tight">
             {t('Ауылдарға қажет мамандар / Шақыратын ауылдар', 'Вакансии и приглашающие сёла')}
           </h2>
           <p className="text-gray-700 text-center mb-8">
@@ -392,29 +401,29 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
             {currentLanguage.code === 'kz' ? (
               <>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Абай ауданы — 76 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Аягөз ауданы — 325 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Бородулиха ауданы — 194 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Жарма ауданы — 149 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Бесқарағай ауданы — 120 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Жаңасемей ауданы — 122 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Үржар ауданы — 126 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Ақсуат ауданы — 93 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Көкпекті ауданы — 106 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Мақаншы ауданы — 101 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Абай ауданы — 76 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Аягөз ауданы — 325 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Бородулиха ауданы — 194 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Жарма ауданы — 149 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Бесқарағай ауданы — 120 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Жаңасемей ауданы — 122 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Үржар ауданы — 126 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Ақсуат ауданы — 93 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Көкпекті ауданы — 106 бос жұмыс орын</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Мақаншы ауданы — 101 бос жұмыс орын</div>
               </>
             ) : (
               <>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Абайский район — 76 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Аягозский район — 325 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Бородулихинский район — 194 вакансии</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Жарминский район — 149 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Бескарагайский район — 120 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Жанасемейский район — 122 вакансии</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Урджарский район — 126 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Аксуатский район — 93 вакансии</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Кокпектинский район — 106 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200">Маканчинский район — 101 вакансия</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Абайский район — 76 вакансий</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Аягозский район — 325 вакансий</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Бородулихинский район — 194 вакансии</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Жарминский район — 149 вакансий</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Бескарагайский район — 120 вакансий</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Жанасемейский район — 122 вакансии</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Урджарский район — 126 вакансий</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Аксуатский район — 93 вакансии</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Кокпектинский район — 106 вакансий</div>
+                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Маканчинский район — 101 вакансия</div>
               </>
             )}
           </div>
@@ -425,10 +434,10 @@ const Home: React.FC = () => {
               <>Граждане, которые задаются вопросом: «Если поехать в село, какие есть рабочие места?», могут получить полную информацию, перейдя по ссылке:</>
             )}
           </p>
-          <a href="https://www.enbek.kz/kk/search/vacancy?region_id=10" target="_blank" rel="noopener noreferrer" className="inline-block text-blue-600 hover:underline font-medium mb-4 break-all">
+          <a href="https://www.enbek.kz/kk/search/vacancy?region_id=10" target="_blank" rel="noopener noreferrer" className="inline-block text-primary-600 hover:text-primary-700 hover:underline font-semibold mb-4 break-all transition-colors">
             www.enbek.kz/kk/search/vacancy?region_id=10
           </a>
-          <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-sm text-amber-900/90 mb-8">
+          <div className="p-5 rounded-2xl bg-amber-50/80 border border-amber-200/80 shadow-soft text-sm text-amber-900/90 mb-8">
             {currentLanguage.code === 'kz' ? (
               <>
                 <p className="font-semibold mb-2">Ескерту:</p>
@@ -470,16 +479,16 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── КАК ПОЛУЧИТЬ ГРАНТ (интеграция Enbek) ── */}
-      <section className="py-16 md:py-20 bg-sky-50">
+      <section className="py-16 md:py-24 bg-gradient-to-br from-primary-50 to-sky-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl md:text-3xl font-bold text-blue-700 mb-8">
+          <h3 className="text-2xl md:text-3xl font-bold text-primary-700 mb-8 tracking-tight">
             {t('Гранттарды қалай алуға болады?', 'Как получить государственный грант?')}
           </h3>
           <a
             href={currentLanguage.code === 'kz' ? 'https://business.enbek.kz/kk/how-to-get-government-grant' : 'https://business.enbek.kz/ru/how-to-get-government-grant'}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-white text-blue-600 font-bold text-lg px-8 py-4 rounded-xl shadow-md hover:shadow-lg hover:bg-blue-50 border-2 border-blue-200 transition-all uppercase tracking-wide"
+            className="inline-block bg-white text-primary-600 font-bold text-lg px-8 py-4 rounded-xl shadow-card hover:shadow-card-hover hover:bg-primary-50 border-2 border-primary-200 transition-all uppercase tracking-wide"
           >
             {t('ИӘ, ӘРИНЕ!', 'ДА, КОНЕЧНО!')}
           </a>
@@ -487,26 +496,29 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── LATEST NEWS ── */}
-      <section className="py-20 bg-white">
+      <section className="py-20 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
                 {t('Соңғы жаңалықтар', 'Последние новости')}
               </h2>
               <p className="text-gray-500">
                 {t('Мемлекеттік бағдарламалар туралы соңғы жаңалықтар', 'Последние новости о государственных программах')}
               </p>
             </div>
-            <Link to="/news" className="hidden sm:inline-flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-800 transition-colors">
+            <Link to="/news" className="hidden sm:inline-flex items-center gap-1 text-primary-600 font-semibold hover:text-primary-700 transition-colors">
               {t('Барлығын көру', 'Все новости')} →
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {latestNews.map((news, idx) => (
-              <Link key={news.id} to={`/news/${news.id}`}
-                className="group flex flex-col rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-200">
+            {latestNews.map((news) => (
+              <Link
+                key={news.id}
+                to={`/news/${news.id}`}
+                className="group flex flex-col rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-soft hover:shadow-card-hover hover:border-primary-100 transition-all duration-250"
+              >
                 <div className="relative overflow-hidden h-52 sm:h-56 bg-gray-100">
                   <img
                     src={news.image ? encodeURI(news.image) : '/photos/smilefamilykz.jpg'}
@@ -522,20 +534,20 @@ const Home: React.FC = () => {
                     }}
                   />
                   {news.category && (
-                    <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                    <span className="absolute top-3 left-3 bg-primary-600 text-white text-xs font-semibold px-2.5 py-1 rounded-lg">
                       {news.category}
                     </span>
                   )}
                 </div>
                 <div className="flex flex-col flex-1 p-5">
                   <p className="text-xs text-gray-400 mb-2">{formatDate(news.published_at)}</p>
-                  <h3 className="font-bold text-gray-900 text-base leading-snug mb-3 line-clamp-2 group-hover:text-blue-700 transition-colors">
+                  <h3 className="font-bold text-gray-900 text-base leading-snug mb-3 line-clamp-2 group-hover:text-primary-700 transition-colors">
                     {newsTitle(news)}
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 flex-1">
                     {newsExcerpt(news)}
                   </p>
-                  <span className="inline-flex items-center gap-1 mt-4 text-blue-600 text-sm font-semibold">
+                  <span className="inline-flex items-center gap-1 mt-4 text-primary-600 text-sm font-semibold group-hover:gap-2 transition-all">
                     {t('Оқу', 'Читать')} →
                   </span>
                 </div>
@@ -544,7 +556,7 @@ const Home: React.FC = () => {
           </div>
 
           <div className="mt-10 text-center sm:hidden">
-            <Link to="/news" className="inline-flex items-center gap-2 border border-blue-600 text-blue-600 font-semibold px-6 py-2.5 rounded-xl hover:bg-blue-50 transition-colors">
+            <Link to="/news" className="inline-flex items-center gap-2 border-2 border-primary-600 text-primary-600 font-semibold px-6 py-2.5 rounded-xl hover:bg-primary-50 transition-colors">
               {t('Барлық жаңалықтар', 'Все новости')} →
             </Link>
           </div>
@@ -552,10 +564,11 @@ const Home: React.FC = () => {
       </section>
 
       {/* ── CTA ── */}
-      <section className="py-20 bg-gray-900">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="text-4xl mb-6">💬</div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-5">
+      <section className="py-20 md:py-24 bg-gradient-to-br from-gray-900 to-gray-950 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.03\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-80" aria-hidden />
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-4xl mb-6" aria-hidden>💬</div>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-5 tracking-tight">
             {t('Сұрағыңыз бар ма?', 'Есть вопросы?')}
           </h2>
           <p className="text-gray-400 text-lg mb-10">
@@ -564,8 +577,10 @@ const Home: React.FC = () => {
               'Наши 10 специалистов проконсультируют бесплатно. Помогаем выбрать программы и оформить заявки.'
             )}
           </p>
-          <Link to="/contacts"
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl transition-colors text-lg shadow-xl">
+          <Link
+            to="/contacts"
+            className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-500 text-white font-bold px-8 py-4 rounded-xl transition-colors text-lg shadow-card-hover"
+          >
             {t('Маманмен байланысу', 'Связаться со специалистом')}
           </Link>
         </div>

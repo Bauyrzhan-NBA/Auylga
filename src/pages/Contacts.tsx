@@ -40,9 +40,9 @@ const Contacts: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
       <div className="text-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">
           {t('Мамандармен байланыс', 'Контакты специалистов')}
         </h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -54,20 +54,20 @@ const Contacts: React.FC = () => {
       </div>
 
       {/* Search */}
-      <div className="mb-8">
+      <div className="mb-10">
         <div className="max-w-md mx-auto">
           <input
             type="text"
             placeholder={t('Маманды іздеу...', 'Поиск специалиста...')}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+            className="w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 shadow-soft bg-white"
           />
         </div>
       </div>
 
       {filteredSpecialists.length === 0 ? (
-        <div className="text-center py-12">
+        <div className="text-center py-16 bg-white rounded-2xl border border-gray-100 shadow-soft">
           <p className="text-gray-500 text-lg">
             {t('Мамандар табылмады', 'Специалисты не найдены')}
           </p>
@@ -75,17 +75,17 @@ const Contacts: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredSpecialists.map((specialist) => (
-            <div key={specialist.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            <div key={specialist.id} className="bg-white rounded-2xl shadow-soft overflow-hidden hover:shadow-card-hover transition-all border border-gray-100">
               <div className="p-6">
                 <div className="flex items-center mb-4">
                   {specialist.photo ? (
                     <img
                       src={specialist.photo}
                       alt={specialist.name}
-                      className="w-16 h-16 rounded-full object-cover mr-4"
+                      className="w-16 h-16 rounded-xl object-cover mr-4 ring-2 ring-gray-100"
                     />
                   ) : (
-                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mr-4">
+                    <div className="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mr-4 text-primary-600 font-bold">
                       <span className="text-gray-500 text-xl font-semibold">
                         {specialist.name.split(' ').map(n => n[0]).join('').toUpperCase()}
                       </span>
@@ -119,16 +119,16 @@ const Contacts: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 flex space-x-2">
+                <div className="mt-4 flex gap-2">
                   <a
                     href={`tel:${specialist.phone}`}
-                    className="flex-1 bg-primary-600 text-white px-4 py-2 rounded text-center hover:bg-primary-700 transition-colors"
+                    className="flex-1 bg-primary-600 text-white px-4 py-2.5 rounded-xl text-center font-semibold hover:bg-primary-700 transition-colors shadow-soft"
                   >
                     {t('Қоңырау', 'Позвонить')}
                   </a>
                   <a
                     href={`mailto:${specialist.email}`}
-                    className="flex-1 border border-primary-600 text-primary-600 px-4 py-2 rounded text-center hover:bg-primary-50 transition-colors"
+                    className="flex-1 border-2 border-primary-600 text-primary-600 px-4 py-2.5 rounded-xl text-center font-semibold hover:bg-primary-50 transition-colors"
                   >
                     {t('Хат', 'Написать')}
                   </a>
@@ -140,8 +140,8 @@ const Contacts: React.FC = () => {
       )}
 
       {/* Contact Form Section */}
-      <div className="mt-16 bg-gray-50 rounded-lg p-8">
-        <h2 className="text-2xl font-bold mb-6 text-center">
+      <div className="mt-20 bg-gradient-to-br from-primary-50 to-white rounded-2xl p-8 md:p-10 border border-primary-100 shadow-soft">
+        <h2 className="text-2xl font-extrabold text-gray-900 mb-4 text-center tracking-tight">
           {t('Жалпы сұрақтар', 'Общие вопросы')}
         </h2>
         <p className="text-center text-gray-600 mb-8">
@@ -153,7 +153,7 @@ const Contacts: React.FC = () => {
         <div className="text-center">
           <a
             href="mailto:info@auylga.kz"
-            className="bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors inline-block"
+            className="bg-primary-600 text-white px-8 py-3.5 rounded-xl font-semibold hover:bg-primary-700 transition-colors inline-block shadow-soft"
           >
             info@auylga.kz
           </a>
