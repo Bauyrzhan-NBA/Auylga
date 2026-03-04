@@ -102,7 +102,10 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     api.get('/news/latest', { params: { limit: 4, language: currentLanguage.code } })
-      .then(r => { if (r.data?.length) setLatestNews(r.data); })
+      .then(r => {
+        const data = r.data;
+        if (Array.isArray(data) && data.length > 0) setLatestNews(data);
+      })
       .catch(() => {});
   }, [currentLanguage]);
 
@@ -513,7 +516,7 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {latestNews.map((news) => (
+            {(Array.isArray(latestNews) ? latestNews : []).map((news) => (
               <Link
                 key={news.id}
                 to={`/news/${news.id}`}
