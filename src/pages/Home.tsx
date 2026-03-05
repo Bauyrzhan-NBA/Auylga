@@ -76,16 +76,6 @@ const programs = [
     color: 'bg-indigo-50 border-indigo-200 hover:border-indigo-400',
     iconBg: 'bg-indigo-100',
   },
-  {
-    icon: 'document',
-    titleKz: 'Бір ауыл – бір өнім',
-    titleRu: 'Один аул – один продукт',
-    descKz: 'Грант 5 млн ₸, жергілікті өнімді өндіру мен нарыққа шығаруға қолдау',
-    descRu: 'Грант 5 млн ₸ на производство и продвижение местного продукта одного аула',
-    url: '/odin-aul-odin-product',
-    color: 'bg-emerald-50 border-emerald-200 hover:border-emerald-400',
-    iconBg: 'bg-emerald-100',
-  },
 ];
 
 const Home: React.FC = () => {
