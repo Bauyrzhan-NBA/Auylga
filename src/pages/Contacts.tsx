@@ -1,43 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Specialist } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
-import api from '../services/api';
+import { demoSpecialists } from '../utils/demoData';
 
 const Contacts: React.FC = () => {
-  const [specialists, setSpecialists] = useState<Specialist[]>([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const { t, currentLanguage } = useLanguage();
 
-  useEffect(() => {
-    fetchSpecialists();
-  }, [currentLanguage]);
+  const filteredSpecialists = useMemo(() => demoSpecialists.filter(specialist => {
+    const name = currentLanguage.code === 'ru' && specialist.name_ru ? specialist.name_ru : specialist.name;
+    const spec = currentLanguage.code === 'ru' && specialist.specialization_ru ? specialist.specialization_ru : (specialist.specialization || '');
+    const term = searchTerm.toLowerCase();
+    return name.toLowerCase().includes(term) || spec.toLowerCase().includes(term);
+  }), [searchTerm, currentLanguage.code]);
 
-  const fetchSpecialists = async () => {
-    try {
-      const response = await api.get('/contacts', {
-        params: { language: currentLanguage.code }
-      });
-      setSpecialists(response.data);
-    } catch (error) {
-      console.error('Failed to fetch specialists:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filteredSpecialists = specialists.filter(specialist =>
-    specialist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    specialist.specialization?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
-      </div>
-    );
-  }
+  const displayName = (s: Specialist) => currentLanguage.code === 'ru' && s.name_ru ? s.name_ru : s.name;
+  const displaySpec = (s: Specialist) => currentLanguage.code === 'ru' && s.specialization_ru ? s.specialization_ru : (s.specialization || '');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
@@ -81,20 +59,20 @@ const Contacts: React.FC = () => {
                   {specialist.photo ? (
                     <img
                       src={specialist.photo}
-                      alt={specialist.name}
+                      alt={displayName(specialist)}
                       className="w-16 h-16 rounded-xl object-cover mr-4 ring-2 ring-gray-100"
                     />
                   ) : (
                     <div className="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mr-4 text-primary-600 font-bold">
                       <span className="text-gray-500 text-xl font-semibold">
-                        {specialist.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                        {displayName(specialist).split(' ').map(n => n[0]).filter(Boolean).join('').toUpperCase().slice(0, 2)}
                       </span>
                     </div>
                   )}
                   <div>
-                    <h3 className="text-lg font-semibold">{specialist.name}</h3>
-                    {specialist.specialization && (
-                      <p className="text-sm text-gray-600">{specialist.specialization}</p>
+                    <h3 className="text-lg font-semibold">{displayName(specialist)}</h3>
+                    {displaySpec(specialist) && (
+                      <p className="text-sm text-gray-600">{displaySpec(specialist)}</p>
                     )}
                   </div>
                 </div>
