@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { NewsItem } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
 import { demoNews } from '../utils/demoData';
-import api from '../services/api';
 import { ProgramIcon } from '../components/ProgramIcons';
 
 const programs = [
@@ -92,15 +91,6 @@ const programs = [
 const Home: React.FC = () => {
   const [latestNews, setLatestNews] = useState<NewsItem[]>(demoNews.slice(0, 4));
   const { currentLanguage, t } = useLanguage();
-
-  useEffect(() => {
-    api.get('/news/latest', { params: { limit: 4, language: currentLanguage.code } })
-      .then(r => {
-        const data = r.data;
-        if (Array.isArray(data) && data.length > 0) setLatestNews(data);
-      })
-      .catch(() => {});
-  }, [currentLanguage]);
 
   const newsTitle = (n: NewsItem) =>
     currentLanguage.code === 'ru' && n.title_ru ? n.title_ru : n.title;

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { NewsItem } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
-import api from '../services/api';
 import { demoNews } from '../utils/demoData';
+
+const NEWS_PER_PAGE = 10;
 
 function formatNewsDate(isoDate: string | undefined, locale: string): string {
   if (!isoDate) return '';
@@ -26,46 +27,19 @@ const News: React.FC = () => {
   const { t, currentLanguage } = useLanguage();
 
   useEffect(() => {
+    setLoading(true);
     if (id) {
-      fetchSingleNews(id);
+      const item = demoNews.find((n) => n.id === Number(id)) ?? null;
+      setSingleNews(item);
+      setNews([]);
     } else {
-      fetchNewsList(currentPage);
+      const start = (currentPage - 1) * NEWS_PER_PAGE;
+      setNews(demoNews.slice(start, start + NEWS_PER_PAGE));
+      setTotalPages(Math.ceil(demoNews.length / NEWS_PER_PAGE) || 1);
+      setSingleNews(null);
     }
+    setLoading(false);
   }, [id, currentPage]);
-
-  const fetchNewsList = async (page: number) => {
-    try {
-      setLoading(true);
-      const response = await api.get('/news', {
-        params: { 
-          page, 
-          limit: 10, 
-          language: 'kz' 
-        }
-      });
-      setNews(response.data.news);
-      setTotalPages(response.data.pagination.pages);
-    } catch (error) {
-      console.error('Failed to fetch news:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchSingleNews = async (newsId: string) => {
-    try {
-      setLoading(true);
-      const response = await api.get(`/news/${newsId}`, {
-        params: { language: currentLanguage.code }
-      });
-      setSingleNews(response.data);
-    } catch {
-      const fallback = demoNews.find((n) => n.id === Number(newsId)) ?? null;
-      setSingleNews(fallback);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -150,7 +124,10 @@ const News: React.FC = () => {
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
-            {news.map((item) => (
+            {news.map((item) => {
+              const itemTitle = currentLanguage.code === 'ru' && item.title_ru ? item.title_ru : item.title;
+              const itemExcerpt = currentLanguage.code === 'ru' && item.excerpt_ru ? item.excerpt_ru : item.excerpt;
+              return (
               <Link
                 key={item.id}
                 to={`/news/${item.id}`}
@@ -159,7 +136,7 @@ const News: React.FC = () => {
                 <div className="relative h-52 sm:h-56 bg-gray-100 flex-shrink-0 overflow-hidden">
                   <img
                     src={item.image ? encodeURI(item.image) : '/photos/smilefamilykz.jpg'}
-                    alt={item.title}
+                    alt={itemTitle}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                     onError={(e) => {
@@ -186,17 +163,17 @@ const News: React.FC = () => {
                     )}
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary-700 transition-colors">
-                    {item.title}
+                    {itemTitle}
                   </h3>
                   <p className="text-gray-600 mb-4 line-clamp-3">
-                    {item.excerpt}
+                    {itemExcerpt}
                   </p>
                   <span className="text-primary-600 hover:text-primary-700 font-semibold mt-auto transition-colors">
                     {t('Толығырақ', 'Читать далее')} →
                   </span>
                 </div>
               </Link>
-            ))}
+            );})}
           </div>
 
           {/* Pagination */}
