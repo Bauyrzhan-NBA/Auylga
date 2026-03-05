@@ -89,13 +89,6 @@ const programs = [
   },
 ];
 
-const stats = [
-  { valueKz: '50 000+', valueRu: '50 000+', labelKz: 'Көмек алған азамат', labelRu: 'Граждан получили помощь' },
-  { valueKz: '12 млрд ₸', valueRu: '12 млрд ₸', labelKz: 'Бөлінген қаражат', labelRu: 'Выделено средств' },
-  { valueKz: '6 бағдарлама', valueRu: '6 программ', labelKz: 'Мемлекеттік бағдарлама', labelRu: 'Государственных программ' },
-  { valueKz: '10 маман', valueRu: '10 специалистов', labelKz: 'Онлайн кеңесші', labelRu: 'Онлайн-консультантов' },
-];
-
 const Home: React.FC = () => {
   const [latestNews, setLatestNews] = useState<NewsItem[]>(demoNews.slice(0, 4));
   const { currentLanguage, t } = useLanguage();
@@ -124,19 +117,16 @@ const Home: React.FC = () => {
       {/* ── HERO ── */}
       <section
         className="relative overflow-hidden bg-cover bg-center min-h-[50vh] sm:min-h-[55vh] md:min-h-[60vh]"
-        style={{ backgroundImage: 'url(/photos/smilefamilykz.jpg)' }}
+        style={{ backgroundImage: 'url(/photos/heroglavnayaicon.png)' }}
       >
         <div className="absolute inset-0 bg-gradient-to-br from-primary-900/75 via-primary-800/60 to-gray-900/70" />
         <div className="absolute inset-0 bg-black/20" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24 lg:py-32">
           <div className="max-w-3xl">
-            <span className="inline-block bg-white/25 backdrop-blur-sm text-white text-xs font-bold px-4 py-2 rounded-full mb-5 sm:mb-6 uppercase tracking-widest border border-white/30">
-              {t('Мемлекеттік қолдау порталы', 'Портал государственной поддержки')}
-            </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-4 sm:mb-6 drop-shadow-lg tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4 sm:mb-6 drop-shadow-lg tracking-tight">
               {t(
-                'Ауыл тұрғындарына арналған мемлекеттік қолдау',
-                'Государственная поддержка для жителей сёл'
+                '«Қаладан - ауылға» қанатқақты жобасы аясында ақпарат беретін ресми портал',
+                'Официальный портал, предоставляющий информацию в рамках пилотного проекта «Қаладан - ауылға»'
               )}
             </h1>
             <p className="text-blue-50/95 text-base sm:text-lg md:text-xl mb-8 sm:mb-10 max-w-xl leading-relaxed">
@@ -160,25 +150,6 @@ const Home: React.FC = () => {
                 {t('Маманмен байланыс', 'Консультация специалиста')}
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── STATS ── */}
-      <section className="bg-gradient-to-r from-primary-700 via-primary-600 to-primary-700 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50" aria-hidden />
-        <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/20 divide-y md:divide-y-0">
-            {stats.map((s, i) => (
-              <div key={i} className="px-4 sm:px-6 py-6 sm:py-10 text-center">
-                <div className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tabular-nums">
-                  {currentLanguage.code === 'kz' ? s.valueKz : s.valueRu}
-                </div>
-                <div className="text-primary-100 text-xs sm:text-sm mt-1.5 font-medium">
-                  {currentLanguage.code === 'kz' ? s.labelKz : s.labelRu}
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -218,19 +189,6 @@ const Home: React.FC = () => {
                 </p>
               </>
             )}
-          </div>
-          <div className="mt-10 p-5 md:p-6 rounded-2xl bg-amber-50/80 border border-amber-200/80 shadow-soft">
-            <p className="text-sm md:text-base text-amber-900/90 italic">
-              {currentLanguage.code === 'kz' ? (
-                <>
-                  <span className="font-semibold not-italic">(Жоғарыдағы жобаның мақсатын да сайттың бір жеріне орналастырып берсеңіздер және ол бірінші бетте ашық көрініп тұратындай болса, деген өтініш)</span>
-                </>
-              ) : (
-                <>
-                  <span className="font-semibold not-italic">Примечание:</span> Просим разместить цель проекта в одном из разделов сайта таким образом, чтобы она была открыто представлена и видна уже на главной странице.
-                </>
-              )}
-            </p>
           </div>
         </div>
       </section>
@@ -283,7 +241,7 @@ const Home: React.FC = () => {
 
           <div className="space-y-12">
             <div>
-              <h3 className="text-lg md:text-xl font-bold text-primary-700 mb-4">{t('«Сауынды сиыр» жобасы', 'Проект «Дойная корова»')}</h3>
+              <h3 className="text-lg md:text-xl font-bold text-primary-700 mb-4">{currentLanguage.code === 'kz' ? (<>«Сауынды сиыр» <span className="lowercase">жобасы</span></>) : t('«Сауынды сиыр» жобасы', 'Проект «Дойная корова»')}</h3>
               {currentLanguage.code === 'kz' ? (
                 <>
                   <p className="text-gray-700 leading-relaxed mb-3">
@@ -394,42 +352,6 @@ const Home: React.FC = () => {
           <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-8 text-center tracking-tight">
             {t('Ауылдарға қажет мамандар / Шақыратын ауылдар', 'Вакансии и приглашающие сёла')}
           </h2>
-          <p className="text-gray-700 text-center mb-8">
-            {currentLanguage.code === 'kz' ? (
-              <>Бүгінгі таңда Абай облысының ауылдарында <strong>1 412 бос жұмыс орыны</strong> бар.</>
-            ) : (
-              <>На сегодняшний день в сельских населённых пунктах Абайской области имеется <strong>1 412 вакансий</strong>.</>
-            )}
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
-            {currentLanguage.code === 'kz' ? (
-              <>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Абай ауданы — 76 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Аягөз ауданы — 325 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Бородулиха ауданы — 194 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Жарма ауданы — 149 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Бесқарағай ауданы — 120 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Жаңасемей ауданы — 122 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Үржар ауданы — 126 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Ақсуат ауданы — 93 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Көкпекті ауданы — 106 бос жұмыс орын</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Мақаншы ауданы — 101 бос жұмыс орын</div>
-              </>
-            ) : (
-              <>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Абайский район — 76 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Аягозский район — 325 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Бородулихинский район — 194 вакансии</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Жарминский район — 149 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Бескарагайский район — 120 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Жанасемейский район — 122 вакансии</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Урджарский район — 126 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Аксуатский район — 93 вакансии</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Кокпектинский район — 106 вакансий</div>
-                <div className="bg-white rounded-xl p-4 border border-gray-200 shadow-soft hover:shadow-card transition-shadow">Маканчинский район — 101 вакансия</div>
-              </>
-            )}
-          </div>
           <p className="text-gray-700 mb-4">
             {currentLanguage.code === 'kz' ? (
               <>«Ауылдарға барсақ, қандай жұмыс орындары бар?», — дейтін азаматтар төмендегі сілтемені басу арқылы толық ақпаратқа қол жеткізе алады.</>
@@ -457,22 +379,28 @@ const Home: React.FC = () => {
           </div>
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-4">{t('Шақыратын ауылдар', 'Приглашающие сёла')}</h3>
-            <ul className="space-y-2 text-gray-700">
+            <ul className="space-y-3 text-gray-700">
               {currentLanguage.code === 'kz' ? (
                 <>
-                  <li><strong>Абай ауданы</strong>, Медеу ауылы</li>
-                  <li><strong>Аякөз ауданы</strong>, Тарбағатай ауылы</li>
-                  <li><strong>Ақсуат ауданы</strong>, Ойшілік ауылы</li>
-                  <li><strong>Жаңасемей ауданы</strong>, Ақбұлақ ауылы</li>
-                  <li><strong>Жарма ауданының</strong> Қаратөбе, Кендірлі және Әди ауылдары</li>
+                  <li><strong>Абай ауданы:</strong> Медеу ауылы</li>
+                  <li><strong>Аякөз ауданы:</strong> Нарын, Майлин, Емелтау, Байқошқар, Малгелді, Тарбағатай, Өркен ауылдары</li>
+                  <li><strong>Ақсуат ауданы:</strong> Ойшілік, Құмкөл, Сатпаев, Көкжыра, Ырғызбай, Кіндікті, Қызыл кесік ауылдары</li>
+                  <li><strong>Бесқарағай ауданы:</strong> Жетіжар ауылдық округі Кривинка ауылы, Ерназар ауылдық округі Қоянбай ауылы, М-Владимировка ауылдық округі Бозтал ауылы, Долон ауылдық округі Бөдене ауылы</li>
+                  <li><strong>Жаңасемей ауданы:</strong> Ақбұлақ ауылы</li>
+                  <li><strong>Жарма ауданы:</strong> Қаратөбе, Кендірлі, Әди ауылдары</li>
+                  <li><strong>Үржар ауданы:</strong> Салқынбел ауылдық округі Тасбұлақ және Қарабұйрат ауылдары, Бестерек ауылдық округі Қазымбет ауылы, Барқытбел ауылдық округі Благодатное, Батпақты ауылдары</li>
+                  <li><strong>Мақаншы ауданы:</strong> Қаратал ауылдық округінің Бұғыбай ауылы, Көктерек ауылдық округінің Қызылбұлақ және Қайынды ауылдары, Қарабұлақ ауылдық округінің Барлық-Арасан ауылы</li>
                 </>
               ) : (
                 <>
-                  <li><strong>Абайский район</strong> — село Медеу</li>
-                  <li><strong>Аягозский район</strong> — село Тарбагатай</li>
-                  <li><strong>Аксуатский район</strong> — село Ойшилик</li>
-                  <li><strong>Жанасемейский район</strong> — село Акбулак</li>
-                  <li><strong>Жарминский район</strong> — сёла Каратобе, Кендирли, Ади</li>
+                  <li><strong>Абайский район:</strong> с. Медеу</li>
+                  <li><strong>Аягозский район:</strong> сёла Нарын, Майлин, Емелтау, Байкошкар, Малгельди, Тарбагатай, Оркен</li>
+                  <li><strong>Аксуатский район:</strong> сёла Ойшилик, Кумколь, Сатпаев, Кокжира, Ыргызбай, Киндикти, Кызыл кесик</li>
+                  <li><strong>Бескарагайский район:</strong> Жетижарский с.о. — с. Кривинка, Ерназарский с.о. — с. Коянбай, М-Владимировка с.о. — с. Бозтал, Долонский с.о. — с. Бедене</li>
+                  <li><strong>Жанасемейский район:</strong> с. Акбулак</li>
+                  <li><strong>Жарминский район:</strong> сёла Каратобе, Кендирли, Ади</li>
+                  <li><strong>Урджарский район:</strong> Салкынбельский с.о. — сёла Тасбулак и Карабуйрат, Бестерекский с.о. — с. Казымбет, Баркытбельский с.о. — сёла Благодатное, Батпакты</li>
+                  <li><strong>Маканчинский район:</strong> Каратальский с.о. — с. Бугибай, Коктерекский с.о. — сёла Кызылбулак и Кайынды, Карабулакский с.о. — с. Барлык-Арасан</li>
                 </>
               )}
             </ul>

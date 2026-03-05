@@ -129,8 +129,8 @@ const Footer: React.FC = () => {
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 text-primary-400 text-lg">📞</span>
                 <div>
-                  <p className="text-white text-sm font-semibold">+7 (727) 123-45-67</p>
-                  <p className="text-gray-500 text-xs">{t('Дүйсенбі — Жұма, 9:00–18:00', 'Пн — Пт, 9:00–18:00')}</p>
+                  <p className="text-white text-sm font-semibold">+7 (7222) 36-11-22</p>
+                  <p className="text-gray-500 text-xs">{t('Дүйсенбі — Жұма, 9:00–18:30', 'Пн — Пт, 9:00–18:30')}</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -145,7 +145,7 @@ const Footer: React.FC = () => {
               <li className="flex items-start gap-3">
                 <span className="mt-0.5 text-primary-400 text-lg">📍</span>
                 <p className="text-gray-400 text-sm">
-                  {t('Алматы қ., Назарбаев даңғылы 123', 'г. Алматы, пр. Назарбаева 123')}
+                  {t('Семей қ., Абай даңғылы 97', 'г. Семей, пр. Абая 97')}
                 </p>
               </li>
             </ul>

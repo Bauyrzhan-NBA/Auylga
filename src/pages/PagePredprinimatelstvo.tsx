@@ -52,7 +52,7 @@ const PagePredprinimatelstvo: React.FC = () => {
 
         <section className="mb-14">
           <h2 className="text-xl md:text-2xl font-bold text-blue-700 mb-6">
-            {t('«Сауынды сиыр» жобасы', 'Проект «Дойная корова»')}
+            {isKz ? (<>«Сауынды сиыр» <span className="lowercase">жобасы</span></>) : 'Проект «Дойная корова»'}
           </h2>
           <div className="prose prose-lg max-w-none text-gray-700 space-y-4">
             {isKz ? (
