@@ -5,6 +5,17 @@ import { useLanguage } from '../hooks/useLanguage';
 import api from '../services/api';
 import { demoNews } from '../utils/demoData';
 
+function formatNewsDate(isoDate: string | undefined, locale: string): string {
+  if (!isoDate) return '';
+  const date = new Date(isoDate);
+  if (Number.isNaN(date.getTime())) return '';
+  return date.toLocaleDateString(locale === 'kz' ? 'kk-KZ' : 'ru-RU', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
 const News: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -103,7 +114,7 @@ const News: React.FC = () => {
             )}
             <div className="p-6 md:p-8">
               <div className="text-sm text-gray-500 mb-3">
-                {new Date(singleNews.published_at).toLocaleDateString(currentLanguage.code === 'kz' ? 'kk-KZ' : 'ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })}
+                {formatNewsDate(singleNews.published_at, currentLanguage.code)}
                 {singleNews.category && (
                   <span className="ml-3 bg-primary-100 text-primary-700 px-2.5 py-1 rounded-lg font-semibold">
                     {singleNews.category}
@@ -167,7 +178,7 @@ const News: React.FC = () => {
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   <div className="text-sm text-gray-500 mb-2">
-                    {new Date(item.published_at).toLocaleDateString()}
+                    {formatNewsDate(item.published_at, currentLanguage.code)}
                     {item.category && (
                       <span className="ml-2 bg-primary-100 text-primary-600 px-2.5 py-1 rounded-lg text-xs font-medium">
                         {item.category}

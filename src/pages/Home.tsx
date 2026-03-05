@@ -107,10 +107,13 @@ const Home: React.FC = () => {
   const newsExcerpt = (n: NewsItem) =>
     currentLanguage.code === 'ru' && n.excerpt_ru ? n.excerpt_ru : n.excerpt;
 
-  const formatDate = (iso: string) =>
-    new Date(iso).toLocaleDateString(currentLanguage.code === 'kz' ? 'kk-KZ' : 'ru-RU', {
+  const formatDate = (iso: string | undefined) => {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString(currentLanguage.code === 'kz' ? 'kk-KZ' : 'ru-RU', {
       day: 'numeric', month: 'long', year: 'numeric',
     });
+  };
 
   return (
     <div className="bg-[#f8fafc]">
