@@ -79,7 +79,7 @@ const programs = [
 ];
 
 const Home: React.FC = () => {
-  const [latestNews, setLatestNews] = useState<NewsItem[]>(demoNews.slice(0, 4));
+  const [latestNews] = useState<NewsItem[]>(demoNews);
   const { currentLanguage, t } = useLanguage();
 
   const newsTitle = (n: NewsItem) =>
@@ -253,7 +253,7 @@ const Home: React.FC = () => {
             </div>
 
             <div>
-              <h3 className="text-lg md:text-xl font-bold text-primary-700 mb-4">{t('«100 қой» жобасы', 'Проект «100 овец»')}</h3>
+              <h3 className="text-lg md:text-xl font-bold text-primary-700 mb-4">{currentLanguage.code === 'kz' ? (<>«100 қой» <span className="lowercase">жобасы</span></>) : t('«100 қой» жобасы', 'Проект «100 овец»')}</h3>
               {currentLanguage.code === 'kz' ? (
                 <>
                   <p className="text-gray-700 leading-relaxed mb-3">

@@ -2,6 +2,12 @@
 html {
   -webkit-text-size-adjust: 100%;
 }
+
+/* жобасы — всегда с маленькой буквы в заголовках */
+h2 span.lowercase,
+h3 span.lowercase {
+  text-transform: lowercase !important;
+}
 body {
   -webkit-tap-highlight-color: transparent;
 }
@@ -16,6 +22,7 @@ body {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -23,6 +30,7 @@ body {
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
