@@ -3,6 +3,16 @@ import { useParams, Link } from 'react-router-dom';
 import { NewsItem } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
 import { demoNews } from '../utils/demoData';
+import {
+  setNewsMetaTags,
+  clearNewsMetaTags,
+  getAbsoluteImageUrl,
+  getMetaDescription,
+} from '../utils/metaTags';
+
+/** Если у новости нет изображения: замените на /default-news.jpg, если добавите файл в public */
+const DEFAULT_NEWS_IMAGE = '/photos/smilefamilykz.jpg';
+const SITE_DEFAULT_TITLE = 'Auylga.kz — Мемлекеттік қолдау порталы';
 
 const NEWS_PER_PAGE = 10;
 
@@ -40,6 +50,36 @@ const News: React.FC = () => {
     }
     setLoading(false);
   }, [id, currentPage]);
+
+  // Open Graph, Twitter Card и canonical для превью ссылок в мессенджерах
+  useEffect(() => {
+    if (id && singleNews) {
+      const title =
+        currentLanguage.code === 'ru' && singleNews.title_ru
+          ? singleNews.title_ru
+          : singleNews.title;
+      const description = getMetaDescription(
+        currentLanguage.code === 'ru' && singleNews.excerpt_ru
+          ? singleNews.excerpt_ru
+          : singleNews.excerpt,
+        singleNews.title
+      );
+      const imagePath = singleNews.image || DEFAULT_NEWS_IMAGE;
+      const imageUrl = getAbsoluteImageUrl(imagePath);
+      const pageUrl =
+        typeof window !== 'undefined'
+          ? window.location.href
+          : `${process.env.REACT_APP_SITE_URL || ''}/news/${id}`;
+
+      setNewsMetaTags({ title, description, imageUrl, pageUrl });
+      document.title = `${title} — ${SITE_DEFAULT_TITLE}`;
+
+      return () => {
+        clearNewsMetaTags();
+        document.title = SITE_DEFAULT_TITLE;
+      };
+    }
+  }, [id, singleNews, currentLanguage.code]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
