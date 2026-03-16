@@ -49,8 +49,9 @@ const indexHtml = fs.readFileSync(indexPath, 'utf8');
 const newsList = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
 newsList.forEach((item) => {
-  const title = item.title_ru || item.title;
-  const description = metaDescription(item.excerpt_ru || item.excerpt, 160);
+  // Для превью в WhatsApp/Telegram всегда используем казахский заголовок и описание
+  const title = item.title;
+  const description = metaDescription(item.excerpt, 160);
   const imageUrl = absoluteImage(item.image);
   const pageUrl = `${SITE_URL}/news/${item.id}`;
 
