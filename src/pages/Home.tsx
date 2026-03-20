@@ -417,9 +417,6 @@ const Home: React.FC = () => {
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
                 {t('Соңғы жаңалықтар', 'Последние новости')}
               </h2>
-              <p className="text-gray-500">
-                {t('Мемлекеттік бағдарламалар туралы соңғы жаңалықтар', 'Последние новости о государственных программах')}
-              </p>
             </div>
             <Link to="/news" className="hidden sm:inline-flex items-center gap-1 text-primary-600 font-semibold hover:text-primary-700 transition-colors">
               {t('Барлығын көру', 'Все новости')} →
