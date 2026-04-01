@@ -10,12 +10,19 @@ const Contacts: React.FC = () => {
   const filteredSpecialists = useMemo(() => demoSpecialists.filter(specialist => {
     const name = currentLanguage.code === 'ru' && specialist.name_ru ? specialist.name_ru : specialist.name;
     const spec = currentLanguage.code === 'ru' && specialist.specialization_ru ? specialist.specialization_ru : (specialist.specialization || '');
+    const secondaryName = currentLanguage.code === 'ru' && specialist.secondary_name_ru ? specialist.secondary_name_ru : (specialist.secondary_name || '');
+    const secondarySpec = currentLanguage.code === 'ru' && specialist.secondary_specialization_ru ? specialist.secondary_specialization_ru : (specialist.secondary_specialization || '');
     const term = searchTerm.toLowerCase();
-    return name.toLowerCase().includes(term) || spec.toLowerCase().includes(term);
+    return name.toLowerCase().includes(term)
+      || spec.toLowerCase().includes(term)
+      || secondaryName.toLowerCase().includes(term)
+      || secondarySpec.toLowerCase().includes(term);
   }), [searchTerm, currentLanguage.code]);
 
   const displayName = (s: Specialist) => currentLanguage.code === 'ru' && s.name_ru ? s.name_ru : s.name;
   const displaySpec = (s: Specialist) => currentLanguage.code === 'ru' && s.specialization_ru ? s.specialization_ru : (s.specialization || '');
+  const displaySecondaryName = (s: Specialist) => currentLanguage.code === 'ru' && s.secondary_name_ru ? s.secondary_name_ru : (s.secondary_name || '');
+  const displaySecondarySpec = (s: Specialist) => currentLanguage.code === 'ru' && s.secondary_specialization_ru ? s.secondary_specialization_ru : (s.secondary_specialization || '');
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
@@ -111,6 +118,60 @@ const Contacts: React.FC = () => {
                     {t('Хат', 'Написать')}
                   </a>
                 </div>
+
+                {specialist.secondary_name && (
+                  <div className="mt-5 pt-5 border-t border-gray-100">
+                    <div className="flex items-center mb-4">
+                      <div className="w-16 h-16 bg-primary-50 rounded-xl flex items-center justify-center mr-4 text-primary-600 font-bold">
+                        <span className="text-gray-500 text-xl font-semibold">
+                          {displaySecondaryName(specialist).split(' ').map(n => n[0]).filter(Boolean).join('').toUpperCase().slice(0, 2)}
+                        </span>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold">{displaySecondaryName(specialist)}</h3>
+                        {displaySecondarySpec(specialist) && (
+                          <p className="text-sm text-gray-600">{displaySecondarySpec(specialist)}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <div className="flex items-center text-gray-600">
+                        <svg className="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <a href={`tel:${specialist.secondary_phone || ''}`} className="hover:text-primary-600">
+                          {specialist.secondary_phone}
+                        </a>
+                      </div>
+
+                      <div className="flex items-center text-gray-600">
+                        <svg className="w-5 h-5 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <a href={`mailto:${specialist.secondary_email || specialist.email}`} className="hover:text-primary-600">
+                          {specialist.secondary_email || specialist.email}
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 flex gap-2">
+                      <a
+                        href={`tel:${specialist.secondary_phone || ''}`}
+                        className="flex-1 bg-primary-600 text-white px-4 py-2.5 rounded-xl text-center font-semibold hover:bg-primary-700 transition-colors shadow-soft"
+                      >
+                        {t('Қоңырау', 'Позвонить')}
+                      </a>
+                      <a
+                        href={`mailto:${specialist.secondary_email || specialist.email}`}
+                        className="flex-1 border-2 border-primary-600 text-primary-600 px-4 py-2.5 rounded-xl text-center font-semibold hover:bg-primary-50 transition-colors"
+                      >
+                        {t('Хат', 'Написать')}
+                      </a>
+                    </div>
+                  </div>
+                )}
+
               </div>
             </div>
           ))}

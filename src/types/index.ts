@@ -32,6 +32,12 @@ export interface Specialist {
   specialization?: string;
   specialization_ru?: string;
   photo?: string;
+  secondary_name?: string;
+  secondary_name_ru?: string;
+  secondary_phone?: string;
+  secondary_email?: string;
+  secondary_specialization?: string;
+  secondary_specialization_ru?: string;
 }
 
 export interface Page {
