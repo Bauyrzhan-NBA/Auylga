@@ -135,7 +135,7 @@ const News: React.FC = () => {
                   </span>
                 )}
               </div>
-              <h1 className="text-2xl md:text-4xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
+              <h1 className="text-2xl md:text-4xl font-black text-gray-900 mb-6 leading-tight tracking-tight">
                 {displayTitle}
               </h1>
               <div
