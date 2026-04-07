@@ -135,7 +135,13 @@ const News: React.FC = () => {
                   </span>
                 )}
               </div>
-              <h1 className="text-2xl md:text-4xl font-black text-gray-900 mb-6 leading-tight tracking-tight">
+              <h1
+                className={
+                  singleNews.id === 18
+                    ? 'text-3xl md:text-5xl font-black text-black mb-6 leading-[1.12] tracking-tight'
+                    : 'text-2xl md:text-4xl font-black text-gray-900 mb-6 leading-tight tracking-tight'
+                }
+              >
                 {displayTitle}
               </h1>
               <div
@@ -202,7 +208,13 @@ const News: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary-700 transition-colors">
+                  <h3
+                    className={
+                      item.id === 18
+                        ? 'text-xl font-black text-black mb-3 line-clamp-2 hover:text-primary-700 transition-colors'
+                        : 'text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-primary-700 transition-colors'
+                    }
+                  >
                     {itemTitle}
                   </h3>
                   <p className="text-gray-600 mb-4 line-clamp-3">
