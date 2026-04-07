@@ -452,13 +452,7 @@ const Home: React.FC = () => {
                 </div>
                 <div className="flex flex-col flex-1 p-5">
                   <p className="text-xs text-gray-400 mb-2">{formatDate(news.published_at)}</p>
-                  <h3
-                    className={
-                      news.id === 18
-                        ? 'font-black text-black text-base leading-snug mb-3 line-clamp-2 group-hover:text-primary-700 transition-colors'
-                        : 'font-bold text-gray-900 text-base leading-snug mb-3 line-clamp-2 group-hover:text-primary-700 transition-colors'
-                    }
-                  >
+                  <h3 className="font-bold text-gray-900 text-base leading-snug mb-3 line-clamp-2 group-hover:text-primary-700 transition-colors">
                     {newsTitle(news)}
                   </h3>
                   <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 flex-1">
