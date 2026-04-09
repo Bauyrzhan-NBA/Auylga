@@ -100,7 +100,7 @@ const News: React.FC = () => {
         currentLanguage.code === 'ru' && singleNews.excerpt_ru
           ? singleNews.excerpt_ru
           : singleNews.excerpt,
-        singleNews.title
+        singleNews.title || ''
       );
       const imagePath = singleNews.image || DEFAULT_NEWS_IMAGE;
       const imageUrl = getAbsoluteImageUrl(imagePath);

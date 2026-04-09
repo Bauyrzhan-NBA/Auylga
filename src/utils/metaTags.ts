@@ -36,7 +36,10 @@ export function getAbsoluteImageUrl(relativePath: string | undefined): string {
  * Краткое описание для meta (до ~160 символов, без HTML).
  */
 export function getMetaDescription(excerpt: string | undefined, fallback: string): string {
-  const text = (excerpt || fallback).replace(/<[^>]*>/g, '').trim();
+  const source = typeof excerpt === 'string' && excerpt.length > 0
+    ? excerpt
+    : (typeof fallback === 'string' ? fallback : '');
+  const text = source.replace(/<[^>]*>/g, '').trim();
   if (text.length <= 160) return text;
   return text.slice(0, 157) + '...';
 }
