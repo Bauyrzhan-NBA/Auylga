@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { NewsItem } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
 import { demoNews } from '../utils/demoData';
+import api from '../services/api';
+import { resolveImageUrl } from '../utils/imageUrl';
 import {
   setNewsMetaTags,
   clearNewsMetaTags,
@@ -37,18 +39,54 @@ const News: React.FC = () => {
   const { t, currentLanguage } = useLanguage();
 
   useEffect(() => {
-    setLoading(true);
-    if (id) {
-      const item = demoNews.find((n) => n.id === Number(id)) ?? null;
-      setSingleNews(item);
-      setNews([]);
-    } else {
-      const start = (currentPage - 1) * NEWS_PER_PAGE;
-      setNews(demoNews.slice(start, start + NEWS_PER_PAGE));
-      setTotalPages(Math.ceil(demoNews.length / NEWS_PER_PAGE) || 1);
-      setSingleNews(null);
-    }
-    setLoading(false);
+    let isMounted = true;
+
+    const loadNews = async () => {
+      setLoading(true);
+      try {
+        if (id) {
+          const response = await api.get(`/news/${id}`);
+          if (!isMounted) return;
+          setSingleNews(response.data || null);
+          setNews([]);
+        } else {
+          const response = await api.get('/news', {
+            params: { page: currentPage, limit: NEWS_PER_PAGE },
+          });
+          const apiNews: NewsItem[] = response?.data?.news || [];
+          const apiPages: number = response?.data?.pagination?.pages || 1;
+          if (!isMounted) return;
+          if (apiNews.length > 0) {
+            setNews(apiNews);
+            setTotalPages(apiPages);
+          } else {
+            const start = (currentPage - 1) * NEWS_PER_PAGE;
+            setNews(demoNews.slice(start, start + NEWS_PER_PAGE));
+            setTotalPages(Math.ceil(demoNews.length / NEWS_PER_PAGE) || 1);
+          }
+          setSingleNews(null);
+        }
+      } catch {
+        if (!isMounted) return;
+        if (id) {
+          const item = demoNews.find((n) => n.id === Number(id)) ?? null;
+          setSingleNews(item);
+          setNews([]);
+        } else {
+          const start = (currentPage - 1) * NEWS_PER_PAGE;
+          setNews(demoNews.slice(start, start + NEWS_PER_PAGE));
+          setTotalPages(Math.ceil(demoNews.length / NEWS_PER_PAGE) || 1);
+          setSingleNews(null);
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    loadNews();
+    return () => {
+      isMounted = false;
+    };
   }, [id, currentPage]);
 
   // Open Graph, Twitter Card и canonical для превью ссылок в мессенджерах
@@ -110,7 +148,7 @@ const News: React.FC = () => {
                 {photos.map((src, index) => (
                   <img
                     key={index}
-                    src={encodeURI(src)}
+                    src={encodeURI(resolveImageUrl(src) || src)}
                     alt={`${displayTitle} — ${index + 1}`}
                     className="w-full object-cover object-center rounded-lg"
                     style={{ maxHeight: '75vh', minHeight: 260 }}
@@ -181,7 +219,7 @@ const News: React.FC = () => {
               >
                 <div className="relative h-52 sm:h-56 bg-gray-100 flex-shrink-0 overflow-hidden">
                   <img
-                    src={item.image ? encodeURI(item.image) : '/photos/smilefamilykz.jpg'}
+                    src={item.image ? encodeURI(resolveImageUrl(item.image) || item.image) : '/photos/smilefamilykz.jpg'}
                     alt={itemTitle}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"

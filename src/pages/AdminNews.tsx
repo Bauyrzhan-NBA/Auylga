@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NewsItem } from '../types';
 import api from '../services/api';
+import { resolveImageUrl } from '../utils/imageUrl';
 
 const emptyFormData = {
   title_kz: '',
@@ -11,6 +12,7 @@ const emptyFormData = {
   excerpt_ru: '',
   image: '',
   category: '',
+  published_at: '',
   is_active: true,
 };
 
@@ -20,13 +22,16 @@ const AdminNews: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingNews, setEditingNews] = useState<NewsItem | null>(null);
   const [formData, setFormData] = useState(emptyFormData);
+  const [uploadingImage, setUploadingImage] = useState(false);
   useEffect(() => {
     fetchNews();
   }, []);
 
   const fetchNews = async () => {
     try {
-      const response = await api.get('/news');
+      const response = await api.get('/news', {
+        params: { page: 1, limit: 1000 },
+      });
       setNews(response.data.news);
     } catch (error) {
       console.error('Failed to fetch news:', error);
@@ -58,11 +63,12 @@ const AdminNews: React.FC = () => {
       title_kz: item.title,
       title_ru: item.title_ru || item.title,
       content_kz: item.content || '',
-      content_ru: item.content || '',
+      content_ru: item.content_ru || item.content || '',
       excerpt_kz: item.excerpt,
       excerpt_ru: item.excerpt_ru || item.excerpt,
       image: item.image || '',
       category: item.category || '',
+      published_at: item.published_at ? new Date(item.published_at).toISOString().slice(0, 16) : '',
       is_active: true,
     });
     setShowForm(true);
@@ -76,6 +82,30 @@ const AdminNews: React.FC = () => {
       } catch (error) {
         console.error('Failed to delete news:', error);
       }
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const payload = new FormData();
+      payload.append('image', file);
+      const response = await api.post('/news/upload', payload, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      const uploadedImageUrl = response?.data?.imageUrl;
+      if (uploadedImageUrl) {
+        setFormData((prev) => ({ ...prev, image: uploadedImageUrl }));
+      }
+    } catch (error) {
+      console.error('Failed to upload image:', error);
+      window.alert('Failed to upload image');
+    } finally {
+      setUploadingImage(false);
+      e.target.value = '';
     }
   };
 
@@ -199,6 +229,24 @@ const AdminNews: React.FC = () => {
                   onChange={(e) => setFormData({...formData, image: e.target.value})}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
                 />
+                <div className="mt-2">
+                  <label className="inline-flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    {uploadingImage ? 'Uploading...' : 'Upload from computer'}
+                  </label>
+                </div>
+                {formData.image && (
+                  <img
+                    src={resolveImageUrl(formData.image)}
+                    alt="Uploaded preview"
+                    className="mt-3 w-full h-40 object-cover rounded-md border border-gray-200"
+                  />
+                )}
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -208,6 +256,20 @@ const AdminNews: React.FC = () => {
                   type="text"
                   value={formData.category}
                   onChange={(e) => setFormData({...formData, category: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Published date & time
+                </label>
+                <input
+                  type="datetime-local"
+                  value={formData.published_at}
+                  onChange={(e) => setFormData({ ...formData, published_at: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md"
                 />
               </div>
