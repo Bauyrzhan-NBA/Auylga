@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { NewsItem } from '../types';
 import { useLanguage } from '../hooks/useLanguage';
 import { demoNews } from '../utils/demoData';
 import { ProgramIcon } from '../components/ProgramIcons';
+import api from '../services/api';
+import { resolveImageUrl } from '../utils/imageUrl';
 
 const programs = [
   {
@@ -79,8 +81,28 @@ const programs = [
 ];
 
 const Home: React.FC = () => {
-  const [latestNews] = useState<NewsItem[]>(demoNews);
+  const [latestNews, setLatestNews] = useState<NewsItem[]>(demoNews);
   const { currentLanguage, t } = useLanguage();
+
+  useEffect(() => {
+    const loadNews = async () => {
+      try {
+        const response = await api.get('/news', {
+          params: { page: 1, limit: 100 },
+        });
+        const apiNews: NewsItem[] = response?.data?.news || [];
+        if (apiNews.length > 0) {
+          setLatestNews(apiNews);
+        } else {
+          setLatestNews(demoNews);
+        }
+      } catch {
+        setLatestNews(demoNews);
+      }
+    };
+
+    loadNews();
+  }, []);
 
   const newsTitle = (n: NewsItem) =>
     currentLanguage.code === 'ru' && n.title_ru ? n.title_ru : n.title;
@@ -432,7 +454,7 @@ const Home: React.FC = () => {
               >
                 <div className="relative overflow-hidden h-52 sm:h-56 bg-gray-100">
                   <img
-                    src={news.image ? encodeURI(news.image) : '/photos/smilefamilykz.jpg'}
+                    src={news.image ? encodeURI(resolveImageUrl(news.image) || news.image) : '/photos/smilefamilykz.jpg'}
                     alt={newsTitle(news)}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
