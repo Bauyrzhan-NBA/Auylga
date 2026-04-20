@@ -18,6 +18,42 @@ const SITE_DEFAULT_TITLE = 'Auylga.kz — Мемлекеттік қолдау п
 
 const NEWS_PER_PAGE = 10;
 
+function escapeHtml(input: string): string {
+  return input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatNewsContent(content: string): string {
+  if (!content) return '';
+
+  // If admin intentionally provided HTML, keep legacy behavior.
+  if (/<[a-z][\s\S]*>/i.test(content)) {
+    return content;
+  }
+
+  // Escape first, then apply lightweight markdown transforms.
+  const escaped = escapeHtml(content);
+  const withInlineMarkdown = escaped
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/__(.+?)__/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*(?!\s)(.+?)(?<!\s)\*/g, '$1<em>$2</em>')
+    .replace(/(^|[^_])_(?!\s)(.+?)(?<!\s)_/g, '$1<em>$2</em>')
+    .replace(/~~(.+?)~~/g, '<del>$1</del>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+
+  // Keep line breaks and empty lines from textarea input.
+  return withInlineMarkdown
+    .replace(/\r\n/g, '\n')
+    .replace(/\n{2,}/g, '</p><p>')
+    .replace(/\n/g, '<br />')
+    .replace(/^/, '<p>')
+    .replace(/$/, '</p>');
+}
+
 function formatNewsDate(isoDate: string | undefined, locale: string): string {
   if (!isoDate) return '';
   const date = new Date(isoDate);
@@ -134,6 +170,7 @@ const News: React.FC = () => {
   if (id && singleNews) {
     const displayTitle = currentLanguage.code === 'ru' && singleNews.title_ru ? singleNews.title_ru : singleNews.title;
     const displayContent = currentLanguage.code === 'ru' && singleNews.content_ru ? singleNews.content_ru : (singleNews.content || '');
+    const formattedContent = formatNewsContent(displayContent);
     const photos = singleNews.gallery && singleNews.gallery.length > 0 ? singleNews.gallery : (singleNews.image ? [singleNews.image] : []);
     return (
       <div className="min-h-screen bg-[#f8fafc]">
@@ -184,7 +221,7 @@ const News: React.FC = () => {
               </h1>
               <div
                 className="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-headings:font-bold prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline"
-                dangerouslySetInnerHTML={{ __html: displayContent }}
+                dangerouslySetInnerHTML={{ __html: formattedContent }}
               />
             </div>
           </div>
